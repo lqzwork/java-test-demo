@@ -8,7 +8,7 @@ import redis.clients.jedis.Transaction;
 public class MyRunnable implements Runnable {
 	 
     String watchkeys = "watchkeys";// 监视keys
-    Jedis jedis = new Jedis("192.168.56.101", 6379);
+    Jedis jedis = new Jedis("127.0.0.1", 6379);
     String userinfo;
     public MyRunnable() {
     }
