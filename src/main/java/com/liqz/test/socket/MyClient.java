@@ -14,7 +14,7 @@ public class MyClient {
 			BufferedWriter bufferedWriter = null;
 			BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(System.in));
 			while(!"exit".equals(content = bufferedReader.readLine())) {
-				socket = new Socket("10.3.201.217", 9999);
+				socket = new Socket("127.0.0.1", 9999);
 				bufferedWriter = new BufferedWriter(new OutputStreamWriter(socket.getOutputStream()));
 				bufferedWriter.write(content);
 				bufferedWriter.flush();
