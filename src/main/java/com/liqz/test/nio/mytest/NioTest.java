@@ -26,10 +26,13 @@ public class NioTest implements Serializable{
 			FileChannel co = fos.getChannel();
 			//创建缓冲区
 			ByteBuffer bb = ByteBuffer.allocate(1024);
-			ci.read(bb);
-			bb.flip();
-			co.write(bb);
-			bb.clear();
+			while ((ci.read(bb)) != -1) {
+				bb.flip();
+				co.write(bb);
+				bb.clear();
+			}
+			ci.close();
+			co.close();
 			System.out.println("----------------完成---------------");
 			NioTest nioTest = new NioTest();
 			nioTest.testObjectInputStream();
@@ -53,8 +56,8 @@ public class NioTest implements Serializable{
 			ObjectOutputStream objOutput = new ObjectOutputStream(new FileOutputStream(file));
 			objOutput.writeObject(user1);
 			ObjectInputStream objInput = new ObjectInputStream(new FileInputStream(file));
-//			User1 user = (User1) objInput.readObject();
-			User2 user = (User2) objInput.readObject();
+			User1 user = (User1) objInput.readObject();
+//			User2 user = (User2) objInput.readObject();
 			System.out.println(user.getName());
 		} catch (IOException e) {
 			e.printStackTrace();
