@@ -16,9 +16,28 @@ import java.util.Map.Entry;
 
 public class NioTest implements Serializable{
 	public static void main(String[] args) {
+		//buffer数据传输测试
+		testTransferFromBuffer();
+		System.out.println("---------buffer数据传输测试完成-----------");
+		
+		//对象流测试
+		NioTest nioTest = new NioTest();
+		nioTest.testObjectInputStream();
+		System.out.println("---------对象流测试完成-----------");
+		
+		//通道数据传输测试
+		testTransferFromChannel();
+		System.out.println("---------通道数据传输测试完成-----------");
+	}
+	
+	/**
+	 * buffer数据传输测试
+	 */
+	public static void testTransferFromBuffer() {
+		File file = new File("D:/a/timg.jpg");
+		FileInputStream fis;
 		try {
-			File file = new File("D:/a/timg.jpg");
-			FileInputStream fis = new FileInputStream(file);
+			fis = new FileInputStream(file);
 			File file2 = new File("D:/a/timg2.jpg");
 			FileOutputStream fos = new FileOutputStream(file2);
 			//获取通道
@@ -33,14 +52,28 @@ public class NioTest implements Serializable{
 			}
 			ci.close();
 			co.close();
-			System.out.println("----------------完成---------------");
-			NioTest nioTest = new NioTest();
-			nioTest.testObjectInputStream();
-			System.out.println("---------666-----------");
-			
-		} catch (FileNotFoundException e) {
+		} catch (Exception e) {
 			e.printStackTrace();
-		} catch (IOException e) {
+		}
+	}
+	
+	/**
+	 * 通道数据传输测试
+	 */
+	public static void testTransferFromChannel() {
+		try {
+			File file = new File("D:/a/nio.txt");
+			FileInputStream fis = new FileInputStream(file);
+			File file2 = new File("D:/a/nio2.txt");
+			FileOutputStream fos = new FileOutputStream(file2);
+			//获取通道
+			FileChannel ci = fis.getChannel();
+			FileChannel co = fos.getChannel();
+			//nio通道传输
+			co.transferFrom(ci, 0, ci.size());
+			ci.close();
+			co.close();
+		} catch (Exception e) {
 			e.printStackTrace();
 		}
 		
@@ -59,9 +92,7 @@ public class NioTest implements Serializable{
 			User1 user = (User1) objInput.readObject();
 //			User2 user = (User2) objInput.readObject();
 			System.out.println(user.getName());
-		} catch (IOException e) {
-			e.printStackTrace();
-		} catch (ClassNotFoundException e) {
+		} catch (Exception e) {
 			e.printStackTrace();
 		}
 		
