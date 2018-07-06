@@ -28,6 +28,8 @@ public class NioTest implements Serializable{
 		//通道数据传输测试
 		testTransferFromChannel();
 		System.out.println("---------通道数据传输测试完成-----------");
+		
+		System.out.println(3 | 2);
 	}
 	
 	/**
